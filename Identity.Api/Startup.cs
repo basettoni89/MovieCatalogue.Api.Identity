@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Amazon.DynamoDBv2;
+using Identity.Api.MongoDb;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -11,7 +11,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
-using MovieCatalogue.Api.Identity.DynamoDB;
+using Microsoft.Extensions.Options;
 using MovieCatalogue.Api.Identity.Repositories;
 
 namespace MovieCatalogue.Api.Identity
@@ -28,10 +28,7 @@ namespace MovieCatalogue.Api.Identity
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            AmazonDynamoDBConfig clientConfig = new AmazonDynamoDBConfig();
-            clientConfig.ServiceURL = "http://localhost:8000";
-
-            services.AddDynamoDb(clientConfig);
+            services.AddMongoDb(() => Configuration.GetMongoDbSettings("MongoDbSettings"));
 
             services.AddTransient<IUserRepository, UserRepository>();
 

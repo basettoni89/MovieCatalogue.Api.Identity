@@ -2,23 +2,23 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Amazon.DynamoDBv2.DataModel;
+using MongoDB.Driver;
 using MovieCatalogue.Api.Identity.Models;
 
 namespace MovieCatalogue.Api.Identity.Repositories
 {
     public class UserRepository : IUserRepository
     {
-        private readonly IDynamoDBContext context;
+        private readonly IMongoCollection<UserModel> context;
 
-        public UserRepository(IDynamoDBContext context)
+        public UserRepository(IMongoCollection<UserModel> context)
         {
             this.context = context;
         }
 
         public async Task<UserModel> GetUserByID(int userId)
         {
-            return await this.context.LoadAsync<UserModel>(userId);
+            return await this.context.Find(x => x.ID == userId).FirstOrDefaultAsync();
         }
     }
 }
