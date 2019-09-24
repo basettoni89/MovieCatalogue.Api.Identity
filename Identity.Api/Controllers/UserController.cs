@@ -5,6 +5,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using MovieCatalogie.Api.Identity.Queries;
+using MovieCatalogie.Api.Identity.Types;
 
 namespace MovieCatalogue.Api.Identity.Controllers
 {
@@ -19,10 +21,16 @@ namespace MovieCatalogue.Api.Identity.Controllers
             this.userRepository = userRepository;
         }
 
-        [HttpGet("{userId}")]
-        public async Task<ActionResult<UserModel>> GetUser(int userId)
+        [HttpGet()]
+        public PagedResult<UserModel> GetUsers([FromQuery] BrowseUser query)
         {
-            var user = await userRepository.GetUserByID(userId);
+            return userRepository.BrowseUsers(query);
+        }
+
+        [HttpGet("{userId}")]
+        public ActionResult<UserModel> GetUser(int userId)
+        {
+            var user = userRepository.GetUserByID(userId);
 
             if (user == null)
                 return NotFound();

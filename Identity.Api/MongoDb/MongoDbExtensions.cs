@@ -7,19 +7,23 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Identity.Api.MongoDb
+namespace MovieCatalogie.Api.Identity.MongoDb
 {
     public static class MongoDbExtensions
     {
         public static void AddMongoDb(this IServiceCollection services, Func<IMongoDbSettings> settingFunc)
         {
+            IMongoDbSettings settings = settingFunc.Invoke();
+
+            var client = new MongoClient(settings.ConnectionString);
+            var database = client.GetDatabase(settings.DatabaseName);
+
             services.AddScoped<IMongoCollection<UserModel>>(_ => {
-                IMongoDbSettings settings = settingFunc.Invoke();
-
-                var client = new MongoClient(settings.ConnectionString);
-                var database = client.GetDatabase(settings.DatabaseName);
-
                 return database.GetCollection<UserModel>(settings.CollectionName);
+            });
+
+            services.AddScoped<IQueryable<UserModel>>(_ => {
+                return database.GetCollection<UserModel>(settings.CollectionName).AsQueryable();
             });
         }
 

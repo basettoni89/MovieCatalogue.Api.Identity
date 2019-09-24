@@ -25,31 +25,31 @@ namespace MovieCatalogue.Api.Identity.Test.Controllers
             var mockRepository = new Mock<IUserRepository>();
             mockRepository.Setup(x => x.GetUserByID(It.IsAny<int>()))
                 .Returns((int ID) => ID > 0 && ID < 10 ?
-                    Task.FromResult(new UserModel { ID = ID }) : Task.FromResult<UserModel>(null));
+                    new UserModel { ID = ID } : null);
 
             return new UserController(mockRepository.Object);
         }
 
         [Fact]
-        public async void GetUserById_ReturnOkResult()
+        public void GetUserById_ReturnOkResult()
         {
-            var result = await userController.GetUser(1);
+            var result = userController.GetUser(1);
 
             Assert.IsType<OkObjectResult>(result.Result);
         }
 
         [Fact]
-        public async void GetUserById_ReturnUser()
+        public void GetUserById_ReturnUser()
         {
-            var result = (await userController.GetUser(1)).Result as OkObjectResult;
+            var result = userController.GetUser(1).Result as OkObjectResult;
 
             Assert.IsType<UserModel>(result.Value);
         }
 
         [Fact]
-        public async void GetUserById_ReturnNotFound()
+        public void GetUserById_ReturnNotFound()
         {
-            var result = await userController.GetUser(100);
+            var result = userController.GetUser(100);
 
             Assert.IsType<NotFoundResult>(result.Result);
         }
