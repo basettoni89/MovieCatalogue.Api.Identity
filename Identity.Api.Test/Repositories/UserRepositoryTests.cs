@@ -25,7 +25,7 @@ namespace MovieCatalogie.Api.Identity.Test.Repositories
         }
 
         [Fact]
-        public void GetAll()
+        public void GetAll_FindAll()
         {
             var result = userRepository.BrowseUsers(new BrowseUser());
 
@@ -33,12 +33,20 @@ namespace MovieCatalogie.Api.Identity.Test.Repositories
         }
 
         [Fact]
-        public void GetByName()
+        public void GetByName_FindOne()
         {
             var result = userRepository.BrowseUsers(new BrowseUser() { Name = "Davide" });
 
             Assert.Single(result.Items);
             Assert.Collection(result.Items, x => Assert.Equal("Davide", x.Name));
+        }
+
+        [Fact]
+        public void GetByName_FindNone()
+        {
+            var result = userRepository.BrowseUsers(new BrowseUser() { Name = "Pippo" });
+
+            Assert.Empty(result.Items);
         }
     }
 }

@@ -10,7 +10,7 @@ using MovieCatalogie.Api.Identity.Types;
 
 namespace MovieCatalogue.Api.Identity.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/users")]
     [ApiController]
     public class UserController : ControllerBase
     {
