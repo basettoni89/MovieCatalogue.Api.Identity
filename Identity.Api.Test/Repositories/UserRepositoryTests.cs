@@ -38,13 +38,47 @@ namespace MovieCatalogie.Api.Identity.Test.Repositories
             var result = userRepository.BrowseUsers(new BrowseUser() { Name = "Davide" });
 
             Assert.Single(result.Items);
-            Assert.Collection(result.Items, x => Assert.Equal("Davide", x.Name));
+            Assert.Collection(result.Items, x => Assert.Equal(1, x.ID));
         }
 
         [Fact]
         public void GetByName_FindNone()
         {
             var result = userRepository.BrowseUsers(new BrowseUser() { Name = "Pippo" });
+
+            Assert.Empty(result.Items);
+        }
+
+        [Fact]
+        public void GetByUsername_FindOne()
+        {
+            var result = userRepository.BrowseUsers(new BrowseUser() { Username = "erossi" });
+
+            Assert.Single(result.Items);
+            Assert.Collection(result.Items, x => Assert.Equal(2, x.ID));
+        }
+
+        [Fact]
+        public void GetByUsername_FindNone()
+        {
+            var result = userRepository.BrowseUsers(new BrowseUser() { Username = "pluto" });
+
+            Assert.Empty(result.Items);
+        }
+
+        [Fact]
+        public void GetBySurname_FindOne()
+        {
+            var result = userRepository.BrowseUsers(new BrowseUser() { Surname = "Rossi" });
+
+            Assert.Single(result.Items);
+            Assert.Collection(result.Items, x => Assert.Equal(2, x.ID));
+        }
+
+        [Fact]
+        public void GetBySurname_FindNone()
+        {
+            var result = userRepository.BrowseUsers(new BrowseUser() { Surname = "paperino" });
 
             Assert.Empty(result.Items);
         }
