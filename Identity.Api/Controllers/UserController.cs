@@ -5,8 +5,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using MovieCatalogie.Api.Identity.Queries;
-using MovieCatalogie.Api.Identity.Types;
+using MovieCatalogue.Api.Identity.Queries;
+using MovieCatalogue.Api.Identity.Types;
 
 namespace MovieCatalogue.Api.Identity.Controllers
 {

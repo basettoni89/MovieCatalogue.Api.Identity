@@ -1,5 +1,5 @@
-﻿using MovieCatalogie.Api.Identity.Queries;
-using MovieCatalogie.Api.Identity.Types;
+﻿using MovieCatalogue.Api.Identity.Queries;
+using MovieCatalogue.Api.Identity.Types;
 using MovieCatalogue.Api.Identity.Models;
 using System;
 using System.Collections.Generic;

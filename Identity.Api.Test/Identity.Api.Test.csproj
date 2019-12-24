@@ -7,7 +7,7 @@
 
     <AssemblyName>MovieCatalogue.Api.Identity.Test</AssemblyName>
 
-    <RootNamespace>MovieCatalogie.Api.Identity.Test</RootNamespace>
+    <RootNamespace>MovieCatalogue.Api.Identity.Test</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>

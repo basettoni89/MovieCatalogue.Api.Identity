@@ -7,7 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace MovieCatalogie.Api.Identity.MongoDb
+namespace MovieCatalogue.Api.Identity.MongoDb
 {
     public static class MongoDbExtensions
     {
@@ -18,11 +18,18 @@ namespace MovieCatalogie.Api.Identity.MongoDb
             var client = new MongoClient(settings.ConnectionString);
             var database = client.GetDatabase(settings.DatabaseName);
 
-            services.AddScoped<IMongoCollection<UserModel>>(_ => {
+            services.AddScoped<IMongoCollection<CounterModel>>(_ =>
+            {
+                return database.GetCollection<CounterModel>("counters");
+            });
+
+            services.AddScoped<IMongoCollection<UserModel>>(_ => 
+            {
                 return database.GetCollection<UserModel>(settings.CollectionName);
             });
 
-            services.AddScoped<IQueryable<UserModel>>(_ => {
+            services.AddScoped<IQueryable<UserModel>>(_ => 
+            {
                 return database.GetCollection<UserModel>(settings.CollectionName).AsQueryable();
             });
         }

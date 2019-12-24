@@ -1,10 +1,10 @@
-﻿using MovieCatalogie.Api.Identity.Types;
+﻿using MovieCatalogue.Api.Identity.Types;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace MovieCatalogie.Api.Identity.Queries
+namespace MovieCatalogue.Api.Identity.Queries
 {
     public class BrowseUser : PagedQuery
     {

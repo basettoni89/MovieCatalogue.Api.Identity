@@ -1,4 +1,4 @@
-﻿using MovieCatalogie.Api.Identity.Queries;
+﻿using MovieCatalogue.Api.Identity.Queries;
 using MovieCatalogue.Api.Identity.Models;
 using MovieCatalogue.Api.Identity.Repositories;
 using System;
@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using Xunit;
 
-namespace MovieCatalogie.Api.Identity.Test.Repositories
+namespace MovieCatalogue.Api.Identity.Test.Repositories
 {
     public class UserRepositoryTests
     {

@@ -1,7 +1,7 @@
 using System;
 using System.Linq;
 using System.Threading.Tasks;
-using MovieCatalogie.Api.Identity.Types;
+using MovieCatalogue.Api.Identity.Types;
 using MongoDB.Driver;
 using MongoDB.Driver.Linq;
 

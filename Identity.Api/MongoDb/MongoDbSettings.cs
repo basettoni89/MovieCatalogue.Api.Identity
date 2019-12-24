@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace MovieCatalogie.Api.Identity.MongoDb
+namespace MovieCatalogue.Api.Identity.MongoDb
 {
     public class MongoDbSettings : IMongoDbSettings
     {

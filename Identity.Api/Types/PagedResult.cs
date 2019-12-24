@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace MovieCatalogie.Api.Identity.Types
+namespace MovieCatalogue.Api.Identity.Types
 {
     public class PagedResult<TElem>
     {
