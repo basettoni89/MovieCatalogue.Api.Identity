@@ -14,6 +14,8 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using MovieCatalogue.Api.Identity.Repositories;
 using Microsoft.OpenApi.Models;
+using MovieCatalogue.Api.Identity.Jwt;
+using Microsoft.IdentityModel.Logging;
 
 namespace MovieCatalogue.Api.Identity
 {
@@ -31,6 +33,12 @@ namespace MovieCatalogue.Api.Identity
         {
             services.AddMongoDb(() => Configuration.GetMongoDbSettings("MongoDbSettings"));
 
+            // configure strongly typed settings objects
+            var appSettingsSection = Configuration.GetSection("Jwt");
+            services.Configure<JwtSetting>(appSettingsSection);
+
+            services.AddJwtAuthentication(() => appSettingsSection.Get<JwtSetting>());
+
             services.AddTransient<IUserRepository, UserRepository>();
             services.AddTransient<IAuthRepository, AuthRepository>();
 
@@ -39,6 +47,33 @@ namespace MovieCatalogue.Api.Identity
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Movie Identity API", Version = "v1" });
+
+                // Bearer token authentication
+                OpenApiSecurityScheme securityDefinition = new OpenApiSecurityScheme()
+                {
+                    Name = "Bearer",
+                    BearerFormat = "JWT",
+                    Scheme = "bearer",
+                    Description = "Specify the authorization token.",
+                    In = ParameterLocation.Header,
+                    Type = SecuritySchemeType.Http,
+                };
+                c.AddSecurityDefinition("jwt_auth", securityDefinition);
+
+                // Make sure swagger UI requires a Bearer token specified
+                OpenApiSecurityScheme securityScheme = new OpenApiSecurityScheme()
+                {
+                    Reference = new OpenApiReference()
+                    {
+                        Id = "jwt_auth",
+                        Type = ReferenceType.SecurityScheme
+                    }
+                };
+                OpenApiSecurityRequirement securityRequirements = new OpenApiSecurityRequirement()
+                {
+                    {securityScheme, new string[] { }},
+                };
+                c.AddSecurityRequirement(securityRequirements);
             });
         }
 
@@ -48,6 +83,7 @@ namespace MovieCatalogue.Api.Identity
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
+                IdentityModelEventSource.ShowPII = true;
             }
 
             app.UseSwagger();
@@ -60,6 +96,9 @@ namespace MovieCatalogue.Api.Identity
             app.UseHttpsRedirection();
 
             app.UseRouting();
+
+            app.UseAuthentication();
+            app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {

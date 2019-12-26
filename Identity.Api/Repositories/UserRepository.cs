@@ -29,5 +29,10 @@ namespace MovieCatalogue.Api.Identity.Repositories
         {
             return this.context.Where(x => x.ID == userId).FirstOrDefault();
         }
+
+        public UserModel GetUserByUsername(string username)
+        {
+            return this.context.Where(x => x.Username == username).FirstOrDefault();
+        }
     }
 }

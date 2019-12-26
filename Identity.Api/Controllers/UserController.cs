@@ -7,9 +7,11 @@ using System.Linq;
 using System.Threading.Tasks;
 using MovieCatalogue.Api.Identity.Queries;
 using MovieCatalogue.Api.Identity.Types;
+using Microsoft.AspNetCore.Authorization;
 
 namespace MovieCatalogue.Api.Identity.Controllers
 {
+    [Authorize]
     [Route("api/users")]
     [ApiController]
     public class UserController : ControllerBase

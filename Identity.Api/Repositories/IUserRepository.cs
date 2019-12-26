@@ -13,5 +13,7 @@ namespace MovieCatalogue.Api.Identity.Repositories
         PagedResult<UserModel> BrowseUsers(BrowseUser query);
 
         UserModel GetUserByID(int userId);
+
+        UserModel GetUserByUsername(string username);
     }
 }
